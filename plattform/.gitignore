@@ -25,3 +25,4 @@ terraform.rc
 
 #Ignore Variables
 *.tfvars
+*.envs

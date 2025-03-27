@@ -1,16 +1,18 @@
 ## HOW TO
 
-1. Authenticate yourself to Azure with `az login`
+1. Authenticate yourself to Azure with `az login [--use-device-code]`
 
 1. Create ServicePrincipal for RBAC
 
     https://learn.microsoft.com/en-us/cli/azure/azure-cli-sp-tutorial-1?tabs=bash#create-a-service-principal-with-role-and-scope
 
    ```bash
+   export $(cat ./envs)
+   az ad sp list --query "[?displayName == '${SP_NAME}']"
    az ad sp create-for-rbac \
-      --name <name> \
+      --name ${SP_NAME} \
       --role reader \
-      --scopes /subscriptions/<SubscriptionID>/resourceGroups/<RG>
+      --scopes /subscriptions/${SUBS_ID}/resourceGroups/${RG_NAME}
     ```
 
 1. Prepare your variables file (likely `terraform.tfvars`)
@@ -41,5 +43,6 @@
     ```bash
     az logout
     az login --service-principal --username $APP_ID --password $CLIENT_SECRET --tenant $TENANT_ID
-    az aks get-credentials --resource-group $RG_NAME --name $AKS_CLUSTER_NAME --subscription $SUBSCRIPTION
+    sudo az aks install-cli
+    az aks get-credentials --resource-group $RG_NAME --name $AKS_CLUSTER_NAME --subscription $SUBS_ID
     ```
