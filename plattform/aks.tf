@@ -26,8 +26,11 @@ resource "azurerm_kubernetes_cluster" "this" {
   }
 
   network_profile {
-    network_plugin    = "kubenet"
-    load_balancer_sku = "standard"
+    network_plugin      = "azure"
+    network_policy      = "cilium"
+    network_data_plane  = "cilium"
+    network_plugin_mode = "overlay"
+    load_balancer_sku   = "basic"
   }
 }
 
@@ -41,13 +44,13 @@ data "azuread_user" "admins" {
   user_principal_name = each.value
 }
 
-resource "azurerm_role_assignment" "service_principal" {
+resource "azurerm_role_assignment" "aks_service_principal" {
   scope                = azurerm_kubernetes_cluster.this.id
   role_definition_name = "Azure Kubernetes Service Cluster User Role"
   principal_id         = data.azuread_service_principal.hacker.object_id
 }
 
-resource "azurerm_role_assignment" "cluster_admins" {
+resource "azurerm_role_assignment" "aks_cluster_admins" {
   for_each = toset(var.aks_cluster_admins)
 
   scope                = azurerm_kubernetes_cluster.this.id
@@ -55,7 +58,7 @@ resource "azurerm_role_assignment" "cluster_admins" {
   principal_id         = data.azuread_user.admins[each.value].object_id
 }
 
-resource "azurerm_role_assignment" "leaders" {
+resource "azurerm_role_assignment" "aks_leaders" {
   for_each = toset(var.aks_cluster_admins)
 
   scope                = azurerm_kubernetes_cluster.this.id
