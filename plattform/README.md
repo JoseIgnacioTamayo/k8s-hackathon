@@ -26,6 +26,8 @@
    aks_node_vmtype =
    aks_dns_prefix =
 
+   acr_name = 
+
    service_principal_name =
    ```
 

@@ -31,3 +31,7 @@ variable "aks_cluster_admins" {
   default     = []
   description = "List of Azure Users that are Admins of the Cluster"
 }
+
+variable "acr_name" {
+  type = string
+}
