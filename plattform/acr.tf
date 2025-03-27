@@ -17,7 +17,8 @@ resource "azurerm_role_assignment" "acr_aks" {
 }
 
 resource "azurerm_role_assignment" "acr_service_principal" {
-  principal_id         = azurerm_kubernetes_cluster.this.kubelet_identity[0].object_id
+  
+  principal_id         = data.azuread_service_principal.hacker.object_id
   role_definition_name = "AcrPush"
   scope                = azurerm_container_registry.this.id
 }
@@ -32,6 +33,6 @@ resource "azurerm_role_assignment" "acr_leaders" {
 
 output "acr" {
   value = {
-    login_server = azurerm_container_registry.this.login_server
+    name = azurerm_container_registry.this.name
   }
 }
