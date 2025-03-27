@@ -8,12 +8,15 @@
 
     ```bash
     export $(cat ./envs)
-    az ad sp list --query "[?displayName == '${SP_NAME}']"
-    az ad sp create-for-rbac \
-        --name ${SP_NAME} \
-        --role reader \
-        --scopes /subscriptions/${SUBS_ID}/resourceGroups/${RG_NAME}
-        ```
+    if (az ad sp list --query "[?displayName == '${SP_NAME?}']" --all --out table ); then
+        az ad sp create-for-rbac --name  ${SP_NAME?} --query password
+    else
+        az ad sp create-for-rbac \
+      --name ${SP_NAME?} \
+      --role reader \
+      --scopes /subscriptions/${SUBS_ID?}/resourceGroups/${RG_NAME?}
+    fi
+    ```
 
  1. Prepare your variables file (likely `terraform.tfvars`)
 
@@ -44,7 +47,7 @@
 
     ```bash
     az logout
-    az login --service-principal --username $APP_ID --password $CLIENT_SECRET --tenant $TENANT_ID
-    sudo az aks install-cli
-    az aks get-credentials --resource-group $RG_NAME --name $AKS_CLUSTER_NAME --subscription $SUBS_ID
+    az login --service-principal --username ${APP_ID?} --password ${CLIENT_SECRET?} --tenant ${TENANT_ID?}
+    which kubectl || sudo az aks install-cli
+    az aks get-credentials --resource-group ${RG_NAME?} --name ${AKS_CLUSTER_NAME?} --subscription ${SUBS_ID?}
     ```
