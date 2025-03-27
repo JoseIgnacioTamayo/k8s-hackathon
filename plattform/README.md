@@ -47,6 +47,7 @@
 
     ```bash
     az logout
+    eval $(cat ../envs)
     az login --service-principal --username ${APP_ID?} --password ${CLIENT_SECRET?} --tenant ${TENANT_ID?}
     which kubectl || sudo az aks install-cli
     az aks get-credentials --resource-group ${RG_NAME?} --name ${AKS_CLUSTER_NAME?} --subscription ${SUBS_ID?}
