@@ -1,0 +1,122 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    owner: josta
+  name: webapp-josta
+  namespace: josta
+spec:
+  persistentVolumeClaimRetentionPolicy:
+    whenDeleted: Retain
+    whenScaled: Retain
+  replicas: 2
+  selector:
+    matchLabels:
+      owner: webapp
+      name: webapp
+  serviceName: webapp-josta
+  template:
+    metadata:
+      labels:
+        owner: josta
+        name: webapp
+    spec:
+      containers:
+      - name: webapp
+        image: ${{ ACR_NAME} }.azurecr.io/${{ ACR_NAME }}.webapp:${{ VERSION }}
+        imagePullPolicy: Always
+        args:
+          - "--cert=blue"
+          - "--key=/opt/tls/server.key"
+          - "--cert=/opt/tls/server.cert"
+        env:
+        - name: APP_COLOR
+          valueFrom:
+            configMapKeyRef:
+              name: webapp-color
+              key: color
+        
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: webapp-port
+          failureThreshold: 3
+          initialDelaySeconds: 60
+          periodSeconds: 120
+          successThreshold: 1
+          timeoutSeconds: 3
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: webapp-port
+          failureThreshold: 2
+          initialDelaySeconds: 60
+          periodSeconds: 60
+          successThreshold: 1
+          timeoutSeconds: 1
+        
+        ports:
+        - containerPort: 8080
+          name: webapp-port
+          protocol: TCP
+
+        resources:
+          limits:
+            cpu: "500m"
+            memory: 500Mi
+          requests:
+            cpu: 10m
+            memory: 300Mi
+
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: true
+          runAsNonRoot: true
+          runAsUser: 1000
+          seccompProfile:
+            type: RuntimeDefault
+
+        volumeMounts:
+        - mountPath: /tmp
+          name: tmp-volume
+        - mountPath: /opt/tls
+          name: tls-volume
+        - mountPath: /var/data
+          name: data-volume
+
+    restartPolicy: Always
+    securityContext:
+      fsGroup: 1000
+      runAsGroup: 1000
+      runAsUser: 1000
+
+    volumes:
+      - emptyDir: {}
+        name: tmp-volume
+      - configMap:
+          defaultMode: 420
+          name: webapp-tls
+        name: tls-volume
+      - name: data-volume
+        persistentVolumeClaim:
+          claimName: webapp-pvc
+
+  updateStrategy:
+    type: RollingUpdate
+
+  volumeClaimTemplates:
+    - apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
+        name: webapp-pvc
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 512Mi
+        storageClassName: standard
+        volumeMode: Filesystem

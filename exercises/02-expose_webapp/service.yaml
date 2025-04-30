@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    owner: josta
+    name: webapp
+  name: webapp
+  namespace: josta
+spec:
+  internalTrafficPolicy: Local
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - port: 8443
+    protocol: TCP
+    targetPort: webapp-port
+  selector:
+    owner: webapp
+    name: webapp
+  sessionAffinity: None
+  type: ClusterIP

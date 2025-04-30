@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/forwarded-for-header: X-Forwarded-For
+    nginx.ingress.kubernetes.io/proxy-real-ip-cidr: 0.0.0.0/0
+    nginx.ingress.kubernetes.io/ssl-passthrough: "false"
+    nginx.ingress.kubernetes.io/use-forwarded-headers: "true"
+    nginx.ingress.kubernetes.io/whitelist-source-range: 127.0.0.1/32
+  labels:
+    owner: josta
+    name: webapp
+  namespace: josta
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: example.com
+    http:
+      paths:
+      - backend:
+          service:
+            name: webapp
+            port:
+              number: 8443
+        path: /josta
+        pathType: Prefix
+  tls:
+  - hosts:
+    - example.com
