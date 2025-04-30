@@ -32,6 +32,11 @@ def hello():
     # return Hello page
     return render_template('hello.html', name=socket.gethostname(), color=color_codes[COLOR])
 
+@app.route("/health")
+def health():
+    # return OK
+    return 'OK'
+
 @app.route("/echo", methods=["POST"])
 def echo():
     # return Echo message
@@ -42,6 +47,7 @@ if __name__ == "__main__":
 
     # Check for Command Line Parameters for color
     parser = argparse.ArgumentParser()
+    parser.add_argument('--port', required=False, help="Port to listen at", default=8080)
     parser.add_argument('--color', required=False, help="Also $APP_COLOR")
     parser.add_argument('--cert', required=False, help="Also $TLS_CERT")
     parser.add_argument('--key', required=False, help="Also $TLS_KEY")
@@ -79,6 +85,6 @@ if __name__ == "__main__":
 
     # Run Flask Application
     if args.use_tls:
-        app.run(host="0.0.0.0", port=8080, ssl_context=(CERT_FILE, KEY_FILE))
+        app.run(host="0.0.0.0", port=args.port, ssl_context=(CERT_FILE, KEY_FILE))
     else:
-        app.run(host="0.0.0.0", port=8080)
+        app.run(host="0.0.0.0", port=args.port)

@@ -16,19 +16,21 @@ With https://github.com/kodekloudhub/webapp-color/blob/master/app.py as basis, t
     virtualenv --clear .venv
     source ./.venv/bin/activate
     pip3 install -r ./requirements.txt
-    python3 ./app.py [--color COLOR]
+    python3 ./app.py [--color COLOR] [--port 8080]
     # Optionally create TLS Certs and use HTTPS
     openssl req -x509 -newkey rsa:4096 -nodes -out cert.pem -keyout key.pem -days 30
-    python3 ./app.py [--color COLOR] --use_tls --cert cert.pem --key key.pem
+    python3 ./app.py [--color COLOR]  [--port 8443] --use_tls --cert cert.pem --key key.pem
     ```
 
  1. Test the app locally
 
     ```bash
     curl http://localhost:8080/
+    curl http://localhost:8080/health
     curl http://localhost:8080/echo?msg=Hello -X POST
     # Optionally use HTTPS
     curl -k https://localhost:8080/
+    curl -k https://localhost:8080/health
     curl -k https://localhost:8080/echo?msg=ThisIsAs3cr3t -X POST
     ```
 
