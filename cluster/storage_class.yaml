@@ -1,11 +1,12 @@
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: standard
+  name: azurefile-standard-retain
   annotations:
-    storageclass.kubernetes.io/is-default-class: true
-provisioner: 
+    storageclass.kubernetes.io/is-default-class: "true"
+provisioner: file.csi.azure.com
 parameters:
-  type: pd-standard
-
-# Making sure that the DefaultStorageClass admission controller is enabled on the API server
+  skuName: Standard_LRS
+reclaimPolicy: Retain
+volumeBindingMode: WaitForFirstConsumer
+allowVolumeExpansion: true
