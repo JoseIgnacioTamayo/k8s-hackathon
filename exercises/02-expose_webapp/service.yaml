@@ -3,8 +3,7 @@ kind: Service
 metadata:
   labels:
     owner: josta
-    name: webapp
-  name: webapp
+  name: webapp-svc
   namespace: josta
 spec:
   internalTrafficPolicy: Local
@@ -16,7 +15,7 @@ spec:
     protocol: TCP
     targetPort: webapp-port
   selector:
-    owner: webapp
-    name: webapp
+    owner: josta
+    app: webapp
   sessionAffinity: None
   type: ClusterIP
