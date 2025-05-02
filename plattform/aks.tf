@@ -68,8 +68,7 @@ resource "azurerm_role_assignment" "aks_leaders" {
 
 output "aks_cluster" {
   value = {
-    name                = azurerm_kubernetes_cluster.this.name
-    resource_group_name = data.azurerm_resource_group.this.name
-    subscription_name   = var.subscription_id
+    name    = azurerm_kubernetes_cluster.this.name
+    lb_fqdn = "${var.aks_dns_prefix}.switzerlandnorth.cloudapp.azure.com"
   }
 }
