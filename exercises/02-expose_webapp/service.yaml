@@ -1,21 +1,15 @@
-apiVersion: v1
-kind: Service
+apiVersion: # TODO
+kind: # TODO
 metadata:
-  labels:
-    owner: josta
   name: webapp-svc
-  namespace: josta
 spec:
   internalTrafficPolicy: Local
   ipFamilies:
   - IPv4
   ipFamilyPolicy: SingleStack
   ports:
-  - port: 8443
-    protocol: TCP
-    targetPort: webapp-port
+  # TODO
   selector:
-    owner: josta
-    app: webapp
+    # TODO
   sessionAffinity: None
-  type: ClusterIP
+  type: # TODO

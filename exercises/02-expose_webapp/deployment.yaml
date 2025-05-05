@@ -1,108 +1,77 @@
-apiVersion: apps/v1
-kind: StatefulSet
+apiVersion: # TODO
+kind: # TODO
 metadata:
-  labels:
-    owner: josta
-  name: webapp-statefulset
-  namespace: josta
+  name: webapp
 spec:
-  persistentVolumeClaimRetentionPolicy:
-    whenDeleted: Retain
-    whenScaled: Retain
-  replicas: 2
+    
+  # TODO: Ensure there is >1 Pod
+
   selector:
     matchLabels:
-      owner: josta
-      app: webapp
+      # TODO: Match the labels below
+  
   serviceName: webapp-svc
+  
   template:
     metadata:
       labels:
-        owner: josta
-        app: webapp
+        # TODO: Ensure your pods are not confused with others
     spec:
       containers:
       - name: webapp-app
-        image: akslcvhackathon1.azurecr.io/akslcvhackathon1.webapp:latest
-        imagePullPolicy: Always
+        image: # TODO
         args:
-          - "--cert=blue"
-          - "--key=/opt/tls/server.key"
-          - "--cert=/opt/tls/server.cert"
+          # TODO: Setup the args to call the app
         env:
         - name: APP_COLOR
           valueFrom:
             configMapKeyRef:
               name: webapp-color-configmap
-              key: color
+              key: # TODO
         
         livenessProbe:
-          httpGet:
-            path: /health
-            port: webapp-port
+          # TODO: Use HTTP probes on /health
           failureThreshold: 3
           initialDelaySeconds: 60
           periodSeconds: 120
           successThreshold: 1
           timeoutSeconds: 3
         readinessProbe:
-          httpGet:
-            path: /health
-            port: webapp-port
-          failureThreshold: 2
-          initialDelaySeconds: 60
-          periodSeconds: 60
-          successThreshold: 1
-          timeoutSeconds: 1
+          # TODO: Just like livenessProbe, but more aggresive
         
         ports:
-        - containerPort: 8080
+        - containerPort: # TODO
           name: webapp-port
           protocol: TCP
 
         resources:
-          limits:
-            cpu: "500m"
-            memory: 500Mi
-          requests:
-            cpu: 10m
-            memory: 300Mi
+          # TODO: Request little, max at 0.5 CPU and 100MB RAM
 
         securityContext:
-          allowPrivilegeEscalation: false
-          capabilities:
-            drop:
-            - ALL
-          readOnlyRootFilesystem: true
-          runAsNonRoot: true
-          runAsUser: 1000
-          seccompProfile:
-            type: RuntimeDefault
+          # TODO: Do all you can
 
         volumeMounts:
         - mountPath: /tmp
-          name: tmp-volume
+          name: # TODO
         - mountPath: /opt/tls
-          name: tls-volume
-        - mountPath: /var/data
-          name: data-volume
+          name: # TODO
+        - # TODO: Mount the PVC in /data
 
-      restartPolicy: Always
+      # Only restart the container on failure
+
       securityContext:
-        fsGroup: 1000
-        runAsGroup: 1000
-        runAsUser: 1000
+        # TODO: Do all you can
 
       volumes:
-        - emptyDir: {}
-          name: tmp-volume
+        - # TODO: An emtpy dir
+          name: # TODO
         - secret:
             defaultMode: 420
             secretName: webapp-tls-secret
-          name: tls-volume
-        - name: data-volume
-          persistentVolumeClaim:
-            claimName: webapp-pvc
+          name: # TODO
 
   updateStrategy:
-    type: RollingUpdate
+    type: # TODO: Ensure rollingUpgrade
+  
+  persistentVolumeClaimRetentionPolicy:
+    # TODO: Ensure the PVC is retained in all cases

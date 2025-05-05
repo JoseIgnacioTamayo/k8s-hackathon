@@ -7,8 +7,3 @@ resources:
 - ingress.yaml  
 - pvc.yaml 
 - service.yaml
-
-commonLabels:
-  owner: josta
-
-namespace: josta

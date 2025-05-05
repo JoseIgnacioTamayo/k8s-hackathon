@@ -1,29 +1,16 @@
-apiVersion: networking.k8s.io/v1
-kind: Ingress
+apiVersion: # TODO
+kind: # TODO
 metadata:
   annotations:
+    # Disable SSL Passthrough
     nginx.ingress.kubernetes.io/forwarded-for-header: X-Forwarded-For
-    nginx.ingress.kubernetes.io/ssl-passthrough: "false"
-    nginx.ingress.kubernetes.io/rewrite-target: /$2
     nginx.ingress.kubernetes.io/use-forwarded-headers: "true"
 
-  labels:
-    owner: josta
-  namespace: josta
   name: webapp-ingress
 spec:
   ingressClassName: nginx
   rules:
-  - host: itk5lcvhackathon.switzerlandnorth.cloudapp.azure.com
-    http:
-      paths:
-      - backend:
-          service:
-            name: webapp-svc
-            port:
-              number: 8443
-        path: /josta(/|$)(.*)
-        pathType: ImplementationSpecific
+  - host: # TODO
+    # Route path /<username> to your service
   tls:
-  - hosts:
-    - itk5lcvhackathon.switzerlandnorth.cloudapp.azure.com
+  # Set TLS Redirection

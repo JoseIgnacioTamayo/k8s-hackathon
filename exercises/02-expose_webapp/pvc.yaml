@@ -1,16 +1,9 @@
 apiVersion: v1
-kind: PersistentVolumeClaim
+kind: # TODO
 metadata:
   finalizers:
-  - kubernetes.io/pvc-protection
-  labels:
-    owner: josta
+  - kubernetes.io/pvc-protection  
   name: webapp-pvc
-  namespace: josta
 spec:
-  accessModes:
-  - ReadWriteMany
-  resources:
-    requests:
-      storage: 20M
-  storageClassName: azurefile-csi
+  # TODO: 20MB, Writable by all Pods
+  storageClassName: # TODO
