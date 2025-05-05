@@ -38,7 +38,7 @@ With https://github.com/kodekloudhub/webapp-color/blob/master/app.py as basis, t
 
     ```bash
     sudo docker build . -t webapp:latest
-    sudo docker tag webapp:latest ${ACR_NAME?}.azurecr.io/${ACR_NAME?}.webapp:${VERSION?}
+    sudo docker tag webapp:latest ${ACR_NAME?}.azurecr.io/${USERNAME?}.webapp:${VERSION?}
     ```
  
  1. Push the Image to ACR
