@@ -44,7 +44,7 @@ data "azuread_user" "admins" {
   user_principal_name = each.value
 }
 
-resource "azurerm_role_assignment" "aks_service_principal" {
+resource "azurerm_role_assignment" "hacker" {
   scope                = azurerm_kubernetes_cluster.this.id
   role_definition_name = "Azure Kubernetes Service Cluster User Role"
   principal_id         = data.azuread_service_principal.hacker.object_id
