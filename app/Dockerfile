@@ -1,6 +1,6 @@
 FROM python:3.11-alpine
 
-RUN pip install flask
+RUN pip install flask mysql-connector-python
 
 COPY . /opt/
 
