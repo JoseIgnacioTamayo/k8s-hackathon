@@ -16,7 +16,7 @@ With https://github.com/kodekloudhub/webapp-color/blob/master/app.py as basis, t
     virtualenv --clear .venv
     source ./.venv/bin/activate
     pip3 install -r ./requirements.txt
-    python3 ./app.py [--color COLOR] [--port 8080]
+    python3 ./app.py [--color COLOR] [--port 8080] [--use_msql]
     # Optionally create TLS Certs and use HTTPS
     openssl req -x509 -newkey rsa:4096 -nodes -out cert.pem -keyout key.pem -days 30
     python3 ./app.py [--color COLOR]  [--port 8443] --use_tls --cert cert.pem --key key.pem
@@ -37,6 +37,7 @@ With https://github.com/kodekloudhub/webapp-color/blob/master/app.py as basis, t
  1. Build and Tag the image
 
     ```bash
+    export $(cat ../.envs)
     sudo docker build . -t webapp:latest
     sudo docker tag webapp:latest ${ACR_NAME?}.azurecr.io/${USERNAME?}.webapp:${VERSION?}
     ```
@@ -47,7 +48,7 @@ With https://github.com/kodekloudhub/webapp-color/blob/master/app.py as basis, t
     export $(cat ./envs)
     sudo az login  # --service-principal --username $APP_ID --password $CLIENT_SECRET --tenant $TENANT_ID
     sudo az acr login -n ${ACR_NAME?} --resource-group ${RG_NAME?} --subscription ${SUBS_ID?}
-    sudo docker push ${ACR_NAME?}.azurecr.io/${ACR_NAME?}.webapp:${VERSION?}
+    sudo docker push ${ACR_NAME?}.azurecr.io/${USERNAME?}.webapp:${VERSION?}
     sudo az acr repository show -n ${ACR_NAME?} --repository ${ACR_NAME?}.webapp -o table
     ```
 

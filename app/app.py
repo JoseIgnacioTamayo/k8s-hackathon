@@ -4,6 +4,7 @@ from flask import request
 import socket
 import os
 import argparse
+import mysql.connector
 
 app = Flask(__name__)
 
@@ -22,6 +23,9 @@ SUPPORTED_COLORS = ",".join(color_codes.keys())
 COLOR_FROM_ENV = os.environ.get('APP_COLOR')
 CERT_FILE_FROM_ENV = os.environ.get('TLS_CERT')
 KEY_FILE_FROM_ENV = os.environ.get('TLS_KEY')
+MYSQL_HOST = os.environ.get('MYSQL_HOST')
+MYSQL_USER = os.environ.get('MYSQL_USER')
+MYSQL_PASSWD = os.environ.get('MYSQL_PASSWD')
 
 COLOR = "black"
 CERT_FILE = None
@@ -52,6 +56,7 @@ if __name__ == "__main__":
     parser.add_argument('--cert', required=False, help="Also $TLS_CERT")
     parser.add_argument('--key', required=False, help="Also $TLS_KEY")
     parser.add_argument('--use_tls', action='store_true', default=False)
+    parser.add_argument('--use_mysql', action='store_true', default=False)
     args = parser.parse_args()
 
     if args.use_tls:
@@ -72,6 +77,20 @@ if __name__ == "__main__":
         if not os.path.exists(KEY_FILE):
             print(f"Key file {KEY_FILE} not found")
             exit(1)
+    
+    if args.use_mysql:
+        if not MYSQL_HOST or not MYSQL_USER or not MYSQL_PASSWD:
+            print("If using MySQL, the environment variables are needed")
+            exit(1)
+        try:
+            db = mysql.connector.connect(
+                host=MYSQL_HOST,
+                user=MYSQL_USER,
+                password=MYSQL_PASSWD)
+            db.cursor()
+        except Exception as err:
+            print(f"Error connecting to MySQL: {err}")
+            exit(9)
 
     if args.color:
         COLOR = args.color
