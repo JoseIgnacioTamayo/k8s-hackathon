@@ -1,0 +1,66 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mysql-pod
+spec:
+  containers:
+    - name: mysql
+      image: mysql:latest
+      
+      # TODO: Setup the needed MySQL credentials
+        
+      livenessProbe:
+        # TODO: Use TCP probes on the MySQL Port
+      readinessProbe:
+        # TODO: Just like livenessProbe, but more aggresive
+      
+      ports:
+      - containerPort: # TODO
+        name: mysql-port
+        protocol: TCP
+
+      resources:
+        # TODO: Request little, max at 0.5 CPU and 100MB RAM
+
+
+      securityContext:
+      # TODO: Do all you can
+
+      volumeMounts:
+        - name: # TODO
+          mountPath: /var/lib/mysql
+        - name: # TODO
+          mountPath: /tmp
+
+  volumes:
+  - name: mysql-storage
+    persistentVolumeClaim:
+      claimName: # TODO
+  - name: tmp-volume
+    # TODO
+
+  # TODO: Never restart
+---
+apiVersion: # TODO
+kind: # TODO
+metadata:
+  name:  mysql-pvc
+spec:
+  accessModes:
+  - ReadWriteOnce
+  # TODO: 100M Storage backed by Azure Disk
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-svc
+spec:
+  # TODO: Setup a Headless Service
+---
+apiVersion: # TODO
+kind: # TODO
+metadata:
+  name: mysql-configmap
+data:
+  MYSQL_USER: root
+  MYSQL_PASSWD: # TODO

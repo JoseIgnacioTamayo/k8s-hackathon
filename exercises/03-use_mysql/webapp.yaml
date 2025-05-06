@@ -1,0 +1,15 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  # TODO: Copy the resources from previous exercise
+spec:
+    # TODO: Copy the resources from previous exercise
+    # TODO: Make sure to setup the webapp to connect to the MySQL Service with appropriate credentials
+---
+apiVersion: v1
+kind: Service
+# TODO: Copy the resources from previous exercise
+
+---
+
+# TODO: Copy the resources from previous exercise

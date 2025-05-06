@@ -1,0 +1,15 @@
+apiVersion: # TODO
+kind: # TODO
+metadata:
+  # TODO
+spec:
+  # TODO: Apply to mysql Pod
+  # TODO: Allow incoming connections on the MySQL port
+---
+apiVersion: # TODO
+kind: # TODO
+metadata:
+  # TODO
+spec:
+  # TODO: Apply to webapp Pods
+  # TODO: Allow outgoing connections to the MySQL port
