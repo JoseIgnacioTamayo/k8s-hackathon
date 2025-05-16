@@ -3,13 +3,9 @@ kind: # TODO
 metadata:
   name: webapp-svc
 spec:
-  internalTrafficPolicy: Local
-  ipFamilies:
-  - IPv4
-  ipFamilyPolicy: SingleStack
   ports:
   # TODO
   selector:
     # TODO
-  sessionAffinity: None
+  sessionAffinity: # TODO
   type: # TODO
