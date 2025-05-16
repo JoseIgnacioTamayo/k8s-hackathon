@@ -1,0 +1,77 @@
+apiVersion: # TODO
+kind: # TODO
+metadata:
+  name: webapp
+spec:
+    
+  # TODO: Ensure there is >1 Pod
+
+  selector:
+    matchLabels:
+      # TODO: Match the labels below
+  
+  serviceName: webapp-svc
+  
+  template:
+    metadata:
+      labels:
+        # TODO: Ensure your pods are not confused with others
+    spec:
+      containers:
+      - name: webapp-app
+        image: # TODO
+        args:
+          # TODO: Setup the args to call the app
+        env:
+        - name: APP_COLOR
+          valueFrom:
+            configMapKeyRef:
+              name: webapp-color-configmap
+              key: # TODO
+        
+        livenessProbe:
+          # TODO: Use HTTP probes on /health
+          failureThreshold: 3
+          initialDelaySeconds: 60
+          periodSeconds: 120
+          successThreshold: 1
+          timeoutSeconds: 3
+        readinessProbe:
+          # TODO: Just like livenessProbe, but more aggresive
+        
+        ports:
+        - containerPort: # TODO
+          name: webapp-port
+          protocol: TCP
+
+        resources:
+          # TODO: Request little, max at 0.5 CPU and 100MB RAM
+
+        securityContext:
+          # TODO: Do all you can
+
+        volumeMounts:
+        - mountPath: /tmp
+          name: # TODO
+        - mountPath: /opt/tls
+          name: # TODO
+        - # TODO: Mount the PVC in /data
+
+      # Only restart the container on failure
+
+      securityContext:
+        # TODO: Do all you can
+
+      volumes:
+        - # TODO: An emtpy dir
+          name: # TODO
+        - secret:
+            defaultMode: 420
+            secretName: webapp-tls-secret
+          name: # TODO
+
+  updateStrategy:
+    type: # TODO: Ensure rollingUpgrade
+  
+  persistentVolumeClaimRetentionPolicy:
+    # TODO: Ensure the PVC is retained in all cases

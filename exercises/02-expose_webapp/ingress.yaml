@@ -1,0 +1,16 @@
+apiVersion: # TODO
+kind: # TODO
+metadata:
+  annotations:
+    # Disable SSL Passthrough
+    nginx.ingress.kubernetes.io/forwarded-for-header: X-Forwarded-For
+    nginx.ingress.kubernetes.io/use-forwarded-headers: "true"
+
+  name: webapp-ingress
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: # TODO
+    # Route path /<username> to your service
+  tls:
+  # Set TLS Redirection

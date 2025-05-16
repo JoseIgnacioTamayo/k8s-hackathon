@@ -1,0 +1,11 @@
+apiVersion: # TODO
+kind: # TODO
+metadata:
+  name: webapp-svc
+spec:
+  ports:
+  # TODO
+  selector:
+    # TODO
+  sessionAffinity: # TODO
+  type: # TODO

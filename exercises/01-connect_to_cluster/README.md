@@ -4,12 +4,12 @@
 
 1. Create a Namespace for you
 
-1. Manually run a container in your namespace, using image `${ACR_NAME?}.azurecr.io/${ACR_NAME?}.webapp:${VERSION?}`
+1. Manually run a container in your namespace, using image `${ACR_NAME?}.azurecr.io/${USERNAME?}.webapp:${VERSION?}`
 
 ## Validation
 
 ```bash
 kubectl cluster-info
 
-kubectl get pods -n $YOUR_NAMESPACE
+kubectl get pods -n ${YOUR_NAMESPACE}
 ```
