@@ -1,5 +1,20 @@
 ## HOW TO
  
+ 1. Create your own copy of a file with environments variables (`../.envs`)
+
+    ```
+    SP_NAME=...
+    SUBS_ID=...
+    RG_NAME=...
+    
+    APP_ID=...
+    CLIENT_SECRET=...
+    TENANT_ID=...
+
+    AKS_CLUSTER_NAME=...
+    ACR_NAME=...
+    ```
+
  1. Authenticate yourself to Azure with `az login [--use-device-code]`
 
  1. Create ServicePrincipal for RBAC
@@ -7,7 +22,7 @@
     https://learn.microsoft.com/en-us/cli/azure/azure-cli-sp-tutorial-1?tabs=bash#create-a-service-principal-with-role-and-scope
 
     ```bash
-    export $(cat ./envs)
+    export $(cat ../.envs)
     if (az ad sp list --query "[?displayName == '${SP_NAME?}']" --all --out table ); then
         az ad sp create-for-rbac --name  ${SP_NAME?} --query password
     else
@@ -17,6 +32,8 @@
       --scopes /subscriptions/${SUBS_ID?}/resourceGroups/${RG_NAME?}
     fi
     ```
+
+    Update the obtained values into `../.envs`
 
  1. Prepare your variables file (likely `terraform.tfvars`)
 
@@ -41,13 +58,15 @@
     terraform output
     ```
 
+    Update the obtained values into `../.envs`
+
  1. Use the ServicePrincipal credentials and test them to access the cluster
 
     https://learn.microsoft.com/en-us/azure/aks/kubelogin-authentication
 
     ```bash
     az logout
-    eval $(cat ../envs)
+    export $(cat ../.envs)
     az login --service-principal --username ${APP_ID?} --password ${CLIENT_SECRET?} --tenant ${TENANT_ID?}
     which kubectl || sudo az aks install-cli
     az aks get-credentials --resource-group ${RG_NAME?} --name ${AKS_CLUSTER_NAME?} --subscription ${SUBS_ID?}
