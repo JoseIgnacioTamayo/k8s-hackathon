@@ -27,9 +27,7 @@
         az ad sp create-for-rbac --name  ${SP_NAME?} --query password
     else
         az ad sp create-for-rbac \
-      --name ${SP_NAME?} \
-      --role reader \
-      --scopes /subscriptions/${SUBS_ID?}/resourceGroups/${RG_NAME?}
+      --name ${SP_NAME?}
     fi
     ```
 
