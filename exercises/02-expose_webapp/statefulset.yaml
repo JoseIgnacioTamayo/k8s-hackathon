@@ -1,5 +1,5 @@
 apiVersion: # TODO
-kind: # TODO
+kind: StatefulSet
 metadata:
   name: webapp
 spec:
@@ -21,7 +21,7 @@ spec:
       - name: webapp-app
         image: # TODO
         args:
-          # TODO: Setup the args to call the app
+          - --port=  # Set the Port the App listens at
         env:
         - name: APP_COLOR
           valueFrom:
@@ -52,9 +52,7 @@ spec:
 
         volumeMounts:
         - mountPath: /tmp
-          name: # TODO
-        - mountPath: /opt/tls
-          name: # TODO
+          name: # TODO: Then ephemeral volume
         - # TODO: Mount the PVC in /data
 
       # Only restart the container on failure
@@ -63,11 +61,7 @@ spec:
         # TODO: Do all you can
 
       volumes:
-        - # TODO: An emtpy dir
-          name: # TODO
-        - secret:
-            defaultMode: 420
-            secretName: webapp-tls-secret
+        - # TODO: An ephemeral volume
           name: # TODO
 
   updateStrategy:
@@ -75,3 +69,10 @@ spec:
   
   persistentVolumeClaimRetentionPolicy:
     # TODO: Ensure the PVC is retained in all cases
+
+  volumeClaimTemplates:
+  - metadata:
+      name: # TODO
+    spec:
+      # TODO: 20MB, Writable by all Pods
+      storageClassName: # TODO

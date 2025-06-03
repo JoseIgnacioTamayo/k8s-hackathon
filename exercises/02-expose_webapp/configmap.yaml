@@ -1,0 +1,7 @@
+---
+apiVersion: # TODO
+kind: ConfigMap
+metadata:
+  name: # TODO: Write the expected name
+data:
+  # TODO: Choose a color and write it in a key

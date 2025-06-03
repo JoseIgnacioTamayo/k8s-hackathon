@@ -22,14 +22,12 @@
     https://learn.microsoft.com/en-us/cli/azure/azure-cli-sp-tutorial-1?tabs=bash#create-a-service-principal-with-role-and-scope
 
     ```bash
-    export $(cat ../.envs)
+    eval $(cat ../.envs)
     if (az ad sp list --query "[?displayName == '${SP_NAME?}']" --all --out table ); then
         az ad sp create-for-rbac --name  ${SP_NAME?} --query password
     else
         az ad sp create-for-rbac \
-      --name ${SP_NAME?} \
-      --role reader \
-      --scopes /subscriptions/${SUBS_ID?}/resourceGroups/${RG_NAME?}
+      --name ${SP_NAME?}
     fi
     ```
 
@@ -66,7 +64,7 @@
 
     ```bash
     az logout
-    export $(cat ../.envs)
+    eval $(cat ../.envs)
     az login --service-principal --username ${APP_ID?} --password ${CLIENT_SECRET?} --tenant ${TENANT_ID?}
     which kubectl || sudo az aks install-cli
     az aks get-credentials --resource-group ${RG_NAME?} --name ${AKS_CLUSTER_NAME?} --subscription ${SUBS_ID?}

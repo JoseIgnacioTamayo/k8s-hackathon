@@ -2,7 +2,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-- configmap_secret.yaml  
+- configmap.yaml  
 - deployment.yaml  
 - ingress.yaml  
 - pvc.yaml 

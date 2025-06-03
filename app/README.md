@@ -10,10 +10,12 @@ With https://github.com/kodekloudhub/webapp-color/blob/master/app.py as basis, t
 
 ## How to
 
+ 1. Ensure you are in the './app'
+ 
  1. Run the app locally:
 
     ```bash
-    virtualenv --clear .venv
+    python3 -m venv --clear .venv
     source ./.venv/bin/activate
     pip3 install -r ./requirements.txt
     python3 ./app.py [--color COLOR] [--port 8080] [--use_msql]
@@ -37,19 +39,20 @@ With https://github.com/kodekloudhub/webapp-color/blob/master/app.py as basis, t
  1. Build and Tag the image
 
     ```bash
-    export $(cat ../.envs)
-    sudo docker build . -t webapp:latest
-    sudo docker tag webapp:latest ${ACR_NAME?}.azurecr.io/${ACR_NAME?}.webapp:${VERSION?}
+   eval $(cat ../.envs)
+   VERSION=...
+   docker build . -t webapp:${VERSION?}
+   docker tag webapp:latest ${ACR_NAME?}.azurecr.io/${ACR_NAME?}.webapp:${VERSION?}
     ```
  
  1. Push the Image to ACR
 
     ```bash
-    export $(cat ../.envs)
-    sudo az login  # --service-principal --username $APP_ID --password $CLIENT_SECRET --tenant $TENANT_ID
-    sudo az acr login -n ${ACR_NAME?} --resource-group ${RG_NAME?} --subscription ${SUBS_ID?}
-    sudo docker push ${ACR_NAME?}.azurecr.io/${ACR_NAME?}.webapp:${VERSION?}
-    sudo az acr repository show -n ${ACR_NAME?} --repository ${ACR_NAME?}.webapp -o table
+    eval $(cat ../.envs)
+    az login
+    az acr login -n ${ACR_NAME?} --resource-group ${RG_NAME?} --subscription ${SUBS_ID?}
+    docker push ${ACR_NAME?}.azurecr.io/${ACR_NAME?}.webapp:${VERSION?}
+    az acr repository show -n ${ACR_NAME?} --repository ${ACR_NAME?}.webapp -o table
     ```
 
 
@@ -60,4 +63,3 @@ Maybe this will be cool in Go, with https://echo.labstack.com/docs/templates and
 # Source
 
 https://github.com/kodekloudhub/webapp-color/blob/master/app.py
-
