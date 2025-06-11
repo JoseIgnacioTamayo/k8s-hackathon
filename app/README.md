@@ -41,8 +41,7 @@ With https://github.com/kodekloudhub/webapp-color/blob/master/app.py as basis, t
     ```bash
    eval $(cat ../.envs)
    VERSION=...
-   docker build . -t webapp:${VERSION?}
-   docker tag webapp:latest ${ACR_NAME?}.azurecr.io/${ACR_NAME?}.webapp:${VERSION?}
+   docker build . -t webapp:${VERSION?} -t ${ACR_NAME?}.azurecr.io/webapp:${VERSION?}
     ```
  
  1. Push the Image to ACR
@@ -51,8 +50,8 @@ With https://github.com/kodekloudhub/webapp-color/blob/master/app.py as basis, t
     eval $(cat ../.envs)
     az login
     az acr login -n ${ACR_NAME?} --resource-group ${RG_NAME?} --subscription ${SUBS_ID?}
-    docker push ${ACR_NAME?}.azurecr.io/${ACR_NAME?}.webapp:${VERSION?}
-    az acr repository show -n ${ACR_NAME?} --repository ${ACR_NAME?}.webapp -o table
+    docker push ${ACR_NAME?}.azurecr.io/webapp:${VERSION?}
+    az acr repository show -n ${ACR_NAME?} --repository webapp -o table
     ```
 
 
