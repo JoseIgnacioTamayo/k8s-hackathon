@@ -56,7 +56,8 @@ if __name__ == "__main__":
     parser.add_argument('--cert', required=False, help="Also $TLS_CERT")
     parser.add_argument('--key', required=False, help="Also $TLS_KEY")
     parser.add_argument('--use_tls', action='store_true', default=False)
-    parser.add_argument('--use_mysql', action='store_true', default=False)
+    parser.add_argument('--use_mysql', action='store_true', default=False, 
+                        help="Need $MYSQL_HOST, $MYSQL_USER and $MYSQL_PASSWD")
     args = parser.parse_args()
 
     if args.use_tls:
@@ -80,7 +81,7 @@ if __name__ == "__main__":
     
     if args.use_mysql:
         if not MYSQL_HOST or not MYSQL_USER or not MYSQL_PASSWD:
-            print("If using MySQL, the environment variables are needed")
+            print("If using MySQL, the environment variables MYSQL_HOST, MYSQL_USER and MYSQL_PASSWD are needed")
             exit(1)
         try:
             db = mysql.connector.connect(
