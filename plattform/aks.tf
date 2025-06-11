@@ -66,9 +66,6 @@ resource "azurerm_role_assignment" "aks_leaders" {
   principal_id         = data.azuread_user.admins[each.value].object_id
 }
 
-output "aks_cluster" {
-  value = {
-    name    = azurerm_kubernetes_cluster.this.name
-    lb_fqdn = "${var.aks_dns_prefix}.switzerlandnorth.cloudapp.azure.com"
-  }
+output "aks_cluster_name" {
+  value = azurerm_kubernetes_cluster.this.name
 }

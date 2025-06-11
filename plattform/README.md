@@ -56,7 +56,16 @@
     terraform output
     ```
 
-    Update the obtained values into `../.envs`
+ 1. Update the obtained values into `../.envs`
+
+ 1. Install an nginx IngressController and a StorageClass
+
+    ```bash
+    which kubectl || sudo az aks install-cli
+    az aks get-credentials --resource-group ${RG_NAME?} --name ${AKS_CLUSTER_NAME?} --subscription ${SUBS_ID?}
+    kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.12.2/deploy/static/provider/cloud/deploy.yaml
+    kubectl create -f storage_class.yaml
+    ```
 
  1. Use the ServicePrincipal credentials and test them to access the cluster
 
@@ -66,6 +75,5 @@
     az logout
     eval $(cat ../.envs)
     az login --service-principal --username ${APP_ID?} --password ${CLIENT_SECRET?} --tenant ${TENANT_ID?}
-    which kubectl || sudo az aks install-cli
     az aks get-credentials --resource-group ${RG_NAME?} --name ${AKS_CLUSTER_NAME?} --subscription ${SUBS_ID?}
     ```
