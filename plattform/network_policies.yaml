@@ -39,6 +39,7 @@ spec:
         protocol: TCP
       - port: "53"
         protocol: UDP
+    ingress:
 ---
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
