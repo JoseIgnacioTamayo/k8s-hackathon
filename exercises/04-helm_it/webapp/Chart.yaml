@@ -1,0 +1,9 @@
+apiVersion: v2
+name: webapp
+description: A Helm chart for K8S Hackathon
+
+type: application
+
+version: # TODO
+
+appVersion: # TODO
