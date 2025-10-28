@@ -70,6 +70,7 @@
 
     kubectl create -f storage_class.yaml
     ```
+
  1. Update the Public IP of the Ingress in `../.envs`
 
  1. Use the ServicePrincipal credentials and test them to access the cluster
@@ -79,6 +80,6 @@
     ```bash
     az logout
     eval $(cat ../.envs)
-    az login --service-principal --username ${APP_ID?} --password ${CLIENT_SECRET?} --tenant ${TENANT_ID?}
+    az login --service-principal --username ${APP_ID?} --tenant ${TENANT_ID?} [--password ${CLIENT_SECRET?}]
     az aks get-credentials --resource-group ${RG_NAME?} --name ${AKS_CLUSTER_NAME?} --subscription ${SUBS_ID?}
     ```
