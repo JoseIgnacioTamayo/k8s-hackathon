@@ -1,0 +1,20 @@
+# Default values for webapp.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+labels:
+  owner: me
+
+webapp:
+  replicaCount: 3
+  image:
+    repository: # TODO
+
+mysql:
+  image:
+    tag: latest
+
+ingress:
+  className: nginx
+  host: # TODO
+  path: # TODO
