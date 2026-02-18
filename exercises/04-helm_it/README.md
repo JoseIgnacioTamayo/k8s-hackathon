@@ -9,7 +9,7 @@ To make your app easy to deploy, make it a Helm Charm
 ## Validation
 
 ```bash
-kubectl get pvcs -n $YOUR_NAMESPACE
-kubectl get pods -n $YOUR_NAMESPACE
-kubectl get services -n $YOUR_NAMESPACE
+kubectl get pvc -n $YOUR_NAMESPACE
+kubectl get pod -n $YOUR_NAMESPACE
+kubectl get service -n $YOUR_NAMESPACE
 ```
