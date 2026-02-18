@@ -1,12 +1,12 @@
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: azurefile-standard-retain
+  name: azurefile-standard
   annotations:
     storageclass.kubernetes.io/is-default-class: "true"
 provisioner: file.csi.azure.com
 parameters:
   skuName: Standard_LRS
-reclaimPolicy: Retain
+reclaimPolicy: Delete
 volumeBindingMode: WaitForFirstConsumer
 allowVolumeExpansion: true

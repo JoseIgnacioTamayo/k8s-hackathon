@@ -67,11 +67,11 @@
     
     kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.12.2/deploy/static/provider/cloud/deploy.yaml
     kubectl get services ingress-nginx-controller -n ingress-nginx
-
-    kubectl create -f storage_class.yaml
     ```
 
  1. Update the Public IP of the Ingress in `../.envs`
+
+ 1. Create the StorageClass with `kubectl create -f storage_class.yaml` and ensure this is the only default.
 
  1. Use the ServicePrincipal credentials and test them to access the cluster
 
