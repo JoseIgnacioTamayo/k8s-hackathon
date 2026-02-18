@@ -26,6 +26,7 @@ KEY_FILE_FROM_ENV = os.environ.get('TLS_KEY')
 MYSQL_HOST = os.environ.get('MYSQL_HOST')
 MYSQL_USER = os.environ.get('MYSQL_USER')
 MYSQL_PASSWD = os.environ.get('MYSQL_PASSWD')
+USE_MYSQL = False
 
 COLOR = "black"
 CERT_FILE = None
@@ -34,7 +35,7 @@ KEY_FILE = None
 @app.route("/")
 def hello():
     # return Hello page
-    return render_template('hello.html', name=socket.gethostname(), color=color_codes[COLOR])
+    return render_template('hello.html', name=socket.gethostname(), color=color_codes[COLOR], use_mysql=USE_MYSQL)
 
 @app.route("/health")
 def health():
@@ -89,6 +90,7 @@ if __name__ == "__main__":
                 user=MYSQL_USER,
                 password=MYSQL_PASSWD)
             db.cursor()
+            USE_MYSQL = True
         except Exception as err:
             print(f"Error connecting to MySQL: {err}")
             exit(9)
