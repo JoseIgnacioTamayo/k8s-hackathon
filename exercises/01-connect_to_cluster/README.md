@@ -6,7 +6,9 @@
 
 1. Create a Namespace with *your* name
 
-1. Manually run a container in your namespace, using image `${ACR_NAME?}.azurecr.io/webapp:${VERSION?}`
+1. Look for the highest version of the *webapp* container witn `az acr repository show-tags -n ${ACR_NAME?} --repository webapp`
+
+1. Manually run the *webapp* container in your namespace, using image `${ACR_NAME?}.azurecr.io/webapp:${TAG?}`
 
 ## Validation
 
